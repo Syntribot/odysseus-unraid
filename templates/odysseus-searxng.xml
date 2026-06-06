@@ -9,7 +9,7 @@
   <Support>https://github.com/searxng/searxng/issues</Support>
   <Project>https://github.com/searxng/searxng</Project>
   <Overview>Meta search engine for Odysseus web search (required companion).</Overview>
-  <Description>SearXNG is a privacy-respecting meta search engine used by Odysseus for web search capabilities. This is a <b>required companion</b> for Odysseus.<br/><br/>This companion template ensures the container is named <b>odysseus-searxng</b> so the SEARXNG_INSTANCE default in the main Odysseus template works without manual configuration.</Description>
+  <Description>SearXNG is a privacy-respecting meta search engine used by Odysseus for web search capabilities. This is a required companion for Odysseus.&#13;&#13;This companion template ensures the container is named odysseus-searxng so the SEARXNG_INSTANCE default in the main Odysseus template works without manual configuration.</Description>
   <Category>AI:Tools</Category>
   <TemplateURL>https://raw.githubusercontent.com/realitymolder/Odysseus-Unraid/main/templates/odysseus-searxng.xml</TemplateURL>
   <Icon>https://raw.githubusercontent.com/pewdiepie-archdaemon/odysseus/dev/docs/odysseus.jpg</Icon>
