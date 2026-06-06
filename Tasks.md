@@ -17,28 +17,24 @@
 - [ ] Verify the Action runs successfully and a GHCR package appears under repo → Packages
 - [ ] Make the GHCR package public: Packages → select the package → Package settings → Change visibility to public
 
-## Phase 3: Install on Unraid (Compose Stack — recommended)
+## Phase 3: Install on Unraid (Individual templates)
 
-- [ ] Install the **Docker Compose Manager** plugin from CA on Unraid
-- [ ] Go to Docker tab → Compose → Add New Stack → name it "odysseus"
-- [ ] Paste the content from `https://raw.githubusercontent.com/realitymolder/Odysseus-Unraid/main/docker-compose.yml` into the compose editor
-- [ ] Click "Compose Up" to start all 4 containers (Odysseus, ChromaDB, SearXNG, ntfy)
-- [ ] Verify all containers are running
+- [ ] Install Odysseus-ChromaDB companion container from CA
+- [ ] Install Odysseus-SearXNG companion container from CA
+- [ ] Install Odysseus-ntfy companion container from CA
+- [ ] Install the main Odysseus app from CA
+- [ ] Verify all four containers are running in Docker tab
 - [ ] Check Odysseus logs for auto-generated admin password
 - [ ] Log in at `http://<unraid-ip>:7000`
 - [ ] Change the default admin password in Settings
 - [ ] Configure LLM provider (Ollama, OpenAI, or local endpoint) in Settings
 
-## Phase 3b: Install on Unraid (Individual templates — alternative)
+## Phase 3b: Install on Unraid (Compose stack — alternative)
 
-- [ ] Install ChromaDB companion: Apps → search "Odysseus-ChromaDB" → install
-- [ ] Install SearXNG from existing CA app (SearXNG is already on CA)
-- [ ] Install ntfy from existing CA app (ntfy is already on CA)
-- [ ] Install the main Odysseus app: Apps → search "Odysseus" → install
-- [ ] Configure the SEARXNG_INSTANCE variable to match your SearXNG container name
-- [ ] Verify all four containers are running in Docker tab
-- [ ] Check Odysseus logs for auto-generated admin password
-- [ ] Log in and configure
+- [ ] Install the **Docker Compose Manager** plugin from CA
+- [ ] Docker → Compose → Add New Stack → name it "odysseus"
+- [ ] Paste the content from `https://raw.githubusercontent.com/realitymolder/Odysseus-Unraid/main/docker-compose.yml`
+- [ ] Click "Compose Up" to deploy all 4 containers at once
 
 ## Phase 4: Submit to Unraid Community Apps
 
