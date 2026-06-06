@@ -9,7 +9,7 @@
   <Support>https://github.com/pewdiepie-archdaemon/odysseus/issues</Support>
   <Project>https://github.com/pewdiepie-archdaemon/odysseus</Project>
   <Overview>Self-hosted AI workspace with chat, agents, deep research, documents, email, calendar, and model Cookbook.</Overview>
-  <Description>Odysseus is a self-hosted AI workspace — the self-hosted version of the UI experience you get from ChatGPT and Claude. Running on your own hardware, with your own data — local-first, privacy-first.<br><br><b>Features:</b><br>• Chat with any local model or API (vLLM, llama.cpp, Ollama, OpenAI, OpenRouter, GitHub Copilot)<br>• Autonomous agents with MCP, web, files, shell, skills, memory<br>• Cookbook — scans your hardware, recommends models, click to download and serve<br>• Deep Research — multi-step research into visual reports<br>• Compare — blind test models side by side<br>• Documents editor with AI assistance<br>• Email — IMAP/SMTP inbox with AI triage<br>• Notes, Tasks, Calendar (CalDAV)<br>• Memory &amp; Skills — persistent vector + keyword retrieval<br>• Works on mobile (PWA, responsive)<br><br><b>Required companion containers (install before Odysseus):</b><br>• <b>Odysseus-ChromaDB</b> — vector store for semantic memory<br>• <b>Odysseus-SearXNG</b> — meta search engine for web search<br>• <b>Odysseus-ntfy</b> — notification service for reminders and scheduled tasks</Description>
+   <Description>Odysseus is a self-hosted AI workspace — the self-hosted version of the UI experience you get from ChatGPT and Claude. Running on your own hardware, with your own data — local-first, privacy-first.<br><br><b>Features:</b><br>• Chat with any local model or API (vLLM, llama.cpp, Ollama, OpenAI, OpenRouter, GitHub Copilot)<br>• Autonomous agents with MCP, web, files, shell, skills, memory<br>• Cookbook — scans your hardware, recommends models, click to download and serve<br>• Deep Research — multi-step research into visual reports<br>• Compare — blind test models side by side<br>• Documents editor with AI assistance<br>• Email — IMAP/SMTP inbox with AI triage<br>• Notes, Tasks, Calendar (CalDAV)<br>• Memory &amp; Skills — persistent vector + keyword retrieval<br>• Works on mobile (PWA, responsive)<br><br><b>Companion containers:</b><br>• <b>Odysseus-ChromaDB</b> (required) — vector store for semantic memory<br>• SearXNG (required, install from CA) — meta search engine for web search<br>• ntfy (optional, install from CA) — push notifications<br><br><b>One-click install:</b> For a fully automated setup, install the Docker Compose Manager plugin and import the compose file from <b>https://raw.githubusercontent.com/realitymolder/Odysseus-Unraid/main/docker-compose.yml</b></Description>
   <Category>AI:Tools</Category>
   <WebUI>http://[IP]:[PORT:7000]</WebUI>
   <TemplateURL>https://raw.githubusercontent.com/realitymolder/Odysseus-Unraid/main/templates/odysseus.xml</TemplateURL>
@@ -18,8 +18,6 @@
   <DonorLink>https://github.com/pewdiepie-archdaemon/odysseus</DonorLink>
   <Requires>
     <Requires>Odysseus-ChromaDB</Requires>
-    <Requires>Odysseus-SearXNG</Requires>
-    <Requires>Odysseus-ntfy</Requires>
   </Requires>
 
   <Config Name="App Port" Target="7000" Default="7000" Mode="tcp" Description="Web UI port" Type="Port" Display="always" Required="true" Mask="false">7000</Config>
@@ -36,7 +34,7 @@
   <Config Name="App Port" Target="APP_PORT" Default="7000" Description="Internal app port (leave as 7000)" Type="Variable" Display="always" Required="false" Mask="false">7000</Config>
   <Config Name="LLM Host" Target="LLM_HOST" Default="localhost" Description="Primary LLM server hostname" Type="Variable" Display="always" Required="false" Mask="false">localhost</Config>
   <Config Name="OpenAI API Key" Target="OPENAI_API_KEY" Default="" Description="Optional OpenAI API key" Type="Variable" Display="always" Required="false" Mask="true"></Config>
-  <Config Name="SearXNG Instance" Target="SEARXNG_INSTANCE" Default="http://odysseus-searxng:8080" Description="SearXNG URL (internal Docker hostname)" Type="Variable" Display="always" Required="false" Mask="false">http://odysseus-searxng:8080</Config>
+  <Config Name="SearXNG Instance" Target="SEARXNG_INSTANCE" Default="http://searxng:8080" Description="SearXNG URL (compose: searxng:8080, or your CA SearXNG container name)" Type="Variable" Display="always" Required="false" Mask="false">http://searxng:8080</Config>
   <Config Name="ChromaDB Host" Target="CHROMADB_HOST" Default="odysseus-chromadb" Description="ChromaDB host (internal Docker hostname)" Type="Variable" Display="always" Required="false" Mask="false">odysseus-chromadb</Config>
   <Config Name="ChromaDB Port" Target="CHROMADB_PORT" Default="8000" Description="ChromaDB port" Type="Variable" Display="always" Required="false" Mask="false">8000</Config>
   <Config Name="Database URL" Target="DATABASE_URL" Default="sqlite:///./data/app.db" Description="Database connection string" Type="Variable" Display="always" Required="false" Mask="false">sqlite:///./data/app.db</Config>
