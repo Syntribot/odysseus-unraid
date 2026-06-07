@@ -289,44 +289,6 @@ def is_provisioned():
     return bool(state.get("containers"))
 
 
-def migrate_volume_to_bind(volume_name, host_path, log_callback=None):
-    if not host_path or not volume_name:
-        return False
-
-    def log(msg):
-        if log_callback:
-            log_callback(msg)
-
-    r = _docker("volume", "inspect", volume_name)
-    if not r["ok"]:
-        return False
-
-    log(f"  Checking {volume_name} → {host_path}...")
-    r = _docker("run", "--rm",
-                "-v", f"{volume_name}:/src",
-                "-v", f"{host_path}:/dst",
-                "alpine:latest",
-                "sh", "-c",
-                "if [ -d /dst ] && [ \"$(ls -A /dst 2>/dev/null)\" ]; then "
-                "  echo 'skip: host path not empty'; exit 0; "
-                "fi; "
-                "mkdir -p /dst && "
-                "cp -a /src/. /dst/. 2>/dev/null && "
-                "echo 'migrated' || echo 'failed'")
-    if not r["ok"]:
-        log(f"  WARNING: migration container failed: {r['error']}")
-        return False
-
-    output = r.get("output", "").strip()
-    if output == "migrated":
-        log(f"  Migrated {volume_name} → {host_path}")
-        return True
-    elif output == "skip: host path not empty":
-        log(f"  Skipped (host path already has data): {volume_name}")
-        return True
-    return False
-
-
 def deploy_all(log_callback=None):
     master_env = get_master_env()
     state = load_state()
@@ -351,13 +313,6 @@ def deploy_all(log_callback=None):
         log(f"  Volume: {vol_name}")
         if not ensure_volume(vol_name):
             return {"ok": False, "error": f"Failed to create volume {vol_name}"}
-
-    log("Migrating volumes to host paths (if needed)...")
-    for spec in CONTAINER_SPECS:
-        for env_var, (fallback_vol, _) in spec.get("binds", {}).items():
-            host_path = master_env.get(env_var, "")
-            if host_path:
-                migrate_volume_to_bind(fallback_vol, host_path, log)
 
     for spec in CONTAINER_SPECS:
         name = spec["name"]
