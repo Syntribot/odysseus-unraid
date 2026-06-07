@@ -8,7 +8,7 @@ from jinja2 import Environment, FileSystemLoader
 
 from orchestrator import (
     deploy_all, stop_all, update_all, remove_all_containers,
-    get_all_statuses, is_provisioned, STATE_FILE,
+    get_all_statuses, is_provisioned, get_master_env, STATE_FILE,
 )
 
 app = FastAPI(title="Odysseus AIO")
@@ -101,8 +101,13 @@ async def startup():
 @app.get("/", response_class=HTMLResponse)
 async def index():
     statuses = get_all_statuses()
+    ports = get_master_env()
     html = templates.get_template("index.html").render(
         statuses=statuses,
+        app_port=ports.get("ODYSSEUS_APP_PORT", "7000"),
+        chromadb_port=ports.get("ODYSSEUS_CHROMADB_PORT", "8100"),
+        searxng_port=ports.get("ODYSSEUS_SEARXNG_PORT", "8080"),
+        ntfy_port=ports.get("ODYSSEUS_NTFY_PORT", "8091"),
         deploy_in_progress=deploy_in_progress,
         deploy_log=deploy_log,
         deploy_complete=deploy_complete,
@@ -123,9 +128,16 @@ async def index():
 @app.get("/api/status")
 async def api_status():
     statuses = get_all_statuses()
+    ports = get_master_env()
     return {
         "containers": statuses,
         "provisioned": is_provisioned(),
+        "ports": {
+            "app": ports.get("ODYSSEUS_APP_PORT", "7000"),
+            "chromadb": ports.get("ODYSSEUS_CHROMADB_PORT", "8100"),
+            "searxng": ports.get("ODYSSEUS_SEARXNG_PORT", "8080"),
+            "ntfy": ports.get("ODYSSEUS_NTFY_PORT", "8091"),
+        },
         "deploy_in_progress": deploy_in_progress,
         "deploy_complete": deploy_complete,
         "deploy_result": deploy_result,

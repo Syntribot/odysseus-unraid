@@ -83,13 +83,13 @@ tr:last-child td { border-bottom: none; }
         <td>
           {% if status == "running" %}
             {% if name == "odysseus-aio-app" %}
-              <a class="port-link" href="http://[IP]:7000" target="_blank">:7000</a>
+              <a class="port-link" href="http://[IP]:{{ app_port }}" target="_blank">:{{ app_port }}</a>
             {% elif name == "odysseus-aio-chromadb" %}
-              <span style="color:#666">:8100</span>
+              <span style="color:#666">:{{ chromadb_port }}</span>
             {% elif name == "odysseus-aio-searxng" %}
-              <span style="color:#666">:8080</span>
+              <span style="color:#666">:{{ searxng_port }}</span>
             {% elif name == "odysseus-aio-ntfy" %}
-              <span style="color:#666">:8091</span>
+              <span style="color:#666">:{{ ntfy_port }}</span>
             {% endif %}
           {% else %}
             <span style="color:#444">—</span>
